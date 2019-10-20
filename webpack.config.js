@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const host = 'localhost';
-const port = 8080;
+const port = process.env.NODE_ENV === "test"  ? 8888 : 8080;
 
 module.exports = {
     mode: 'development',
@@ -21,15 +21,16 @@ module.exports = {
     },
     resolve: {
         mainFields: ['browser', 'module', 'main'],
-        extensions: ['.js', '.json', '.jsx']
+        extensions: ['.js', '.json', '.jsx', '.ts', '.tsx']
     },
     module: {
         rules: [
             {
-                test: /\.js(x?)$/,
+                test: /\.js(x?)|\.ts(x?)$/,
                 exclude: /node_modules/,
                 use: 'babel-loader',
             },
+
             {
                 test: /\.css$/,
                 use: [
